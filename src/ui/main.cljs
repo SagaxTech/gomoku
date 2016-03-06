@@ -4,6 +4,7 @@
             [ui.graphic :as graphic]
             [ui.human :as human]
             [ui.crude-menu :as crude-menu]
+            [ui.selection :as selection]
             [rum.core :as rum]))
 
 (def all-examples
@@ -13,16 +14,15 @@
    {:name "Human" :component human/gomoku-app}
    {:name "Crude Menu" :component crude-menu/gomoku-app}])
 
-(defonce selected (atom (first all-examples)))
+(defonce selected-example (atom (first all-examples)))
 
 (rum/defc menu < rum/reactive []
-  (rum/react selected)
+  (rum/react selected-example)
   [:div
-   [:div (for [example all-examples]
-           [:button {:on-click #(reset! selected example)}
-            (:name example)])]
+   (selection/single selected-example all-examples
+                     (selection/render-as-horizontal-buttons :name))
    [:br] [:hr]
-   ((:component @selected))
+   ((:component @selected-example))
    [:br] [:hr]
    [:p "View code on "
     [:a {:href "http://github.com/SagaxTech/gomoku"} "Github"]]])
