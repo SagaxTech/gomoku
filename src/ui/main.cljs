@@ -5,14 +5,16 @@
             [ui.human :as human]
             [ui.crude-menu :as crude-menu]
             [ui.selection :as selection]
+            [ui.configurable :as configurable]
             [rum.core :as rum]))
 
 (def all-examples
-  [{:name "Textual" :component textual/gomoku-app}
-   {:name "Ascii Art" :component ascii/gomoku-app}
-   {:name "Graphic" :component graphic/gomoku-app}
-   {:name "Human" :component human/gomoku-app}
-   {:name "Crude Menu" :component crude-menu/gomoku-app}])
+  [{:name "Textual"      :component textual/gomoku-app}
+   {:name "Ascii Art"    :component ascii/gomoku-app}
+   {:name "Graphic"      :component graphic/gomoku-app}
+   {:name "Human"        :component human/gomoku-app}
+   {:name "Crude Menu"   :component crude-menu/gomoku-app}
+   {:name "Configurable" :component configurable/gomoku-app}])
 
 (defonce selected-example (atom (first all-examples)))
 
@@ -22,7 +24,9 @@
    (selection/single selected-example all-examples
                      (selection/render-as-horizontal-buttons :name))
    [:br] [:hr]
-   ((:component @selected-example))
+   (rum/with-key
+     ((:component @selected-example))
+     (:name @selected-example))
    [:br] [:hr]
    [:p "View code on "
     [:a {:href "http://github.com/SagaxTech/gomoku"} "Github"]]])

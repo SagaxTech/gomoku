@@ -8,12 +8,12 @@
             (render-item selectable
                          (= @selected selectable))])])
   
-  (defn render-as-horizontal-buttons
-    ([] render-as-horizontal-buttons str)
-    ([item-to-text]
-      (fn [item selected]
-        [:button
-         (when selected
-           {:style {:text-decoration "underline"}})
-         (item-to-text item)])))
+(defn render-as-horizontal-buttons
+  ([] render-as-horizontal-buttons str)
+  ([item-to-text]
+    (fn [item selected]
+      [:button
+       (when selected
+         {:style {:text-decoration "underline"}})
+       (item-to-text item)])))
   
